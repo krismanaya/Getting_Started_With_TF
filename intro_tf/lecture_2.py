@@ -34,16 +34,16 @@ b = tf.constant(3, name = "b")
 x = tf.add(a,b, name = "add")
 
 ### output data 
-with tf.Session() as session: 
-    ### add this line to use TensorBoard. 
+# with tf.Session() as session: 
+#     ### add this line to use TensorBoard. 
 
-    writer = tf.summary.FileWriter("./graphs", session.graph)
-    data = session.run(x)
+#     writer = tf.summary.FileWriter("./graphs", session.graph)
+#     data = session.run(x)
     
-    print "addition: 2 + 3 = {}".format(data)
+#     print "addition: 2 + 3 = {}".format(data)
 
-### close file "writer" when done using
-writer.close()
+# ### close file "writer" when done using
+# writer.close()
 
 
 ### Run Visualization
@@ -139,4 +139,28 @@ tf.set_random(seed)
 
 """
 
+### Tensor operations 
+a = tf.constant([3,6])
+b = tf.constant([2,2])
+
+tf.add(a,b) ### --> [(3+2) (6+2)]
+tf.add_n([a, b, b]) ### ---> a + b + b  [(3+2+2) (6+2+2)]
+tf.multiply(a,b) ### --> [(3*2) (6*2)] because multiplication is element wise 
+# tf.matmul(a,b) ### --> ValueError 
+tf.matmul(tf.reshape(a, [1,2]), tf.reshape(b,[2,1])) ### --> [[18]] vector dot-product
+tf.div(a,b) ### --> [(3 / 2 == 1) (6 / 2) == 3]
+tf.mod(a,b) ### --> [1 0]
+
+
+
+### Data Types 
+### 1-d tensor, or "vector"
+t_1 = ['apple', 'peach', 'banana']
+zeros_like = tf.zeros_like(t_1) # ==> empty strings "" ??? 
+# ones_like = tf.ones_like(t_1) # ==> Type error value
+
+with tf.Session() as session: 
+    zeros_like = session.run(zeros_like)
+    print "zeros_like string {}".format(zeros_like)
+    # print "ones_like string {}".format(ones_like)
 
